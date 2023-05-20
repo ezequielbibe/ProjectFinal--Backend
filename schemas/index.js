@@ -1,1 +1,1 @@
-export { default as Users } from './userModal.js' 
+export { default as Users } from "./userModal.js";
