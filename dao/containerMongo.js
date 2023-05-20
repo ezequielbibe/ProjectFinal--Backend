@@ -1,4 +1,4 @@
-import { logger } from "../log/winston.js"
+import { logger } from "../logs/winston.js"
 
 class ContainerMongoDB {
     constructor(model){

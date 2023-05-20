@@ -1,3 +1,6 @@
+import { daoUsers } from "../../dao/index.js"
+import { logger } from "../../logs/winston.js"
+
 export const createUser = async (data) => {
     try{
         const newData = {...data, admin: false}

@@ -3,10 +3,8 @@ import { logger } from "../logs/winston.js"
 import ContainerMongoDB from "./containerMongo.js"
 import ContainerMemory from "./containerMemory.js"
 
-
-import { Carts, Products, Users} from '../schemas/index.js'
-import { carts, products, users } from "./containerMemory.js"
-import { logger } from "../logs/winston.js"
+import { Users } from '../schemas/index.js'
+import { users } from "./containerMemory.js"
 
 const dao = PERSISTENCE === "MONGO" ? ContainerMongoDB : ContainerMemory
 

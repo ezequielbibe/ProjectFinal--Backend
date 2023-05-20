@@ -1,5 +1,7 @@
-import { logger } from "../log/winston.js"
+import { logger } from "../logs/winston.js"
 import randomBytes from "randombytes"
+
+export const users = []
 
 class ContainerMemory {
     constructor(model){
