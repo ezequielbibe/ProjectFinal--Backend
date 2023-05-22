@@ -1,7 +1,7 @@
 import passport from "passport";
 import { hashSync, compareSync } from "bcrypt";
 import { Strategy as LocalStrategy } from "passport-local";
-import { getAllUsers, getUserByEmail } from "../../index.js";
+import { getAllUsers, getUserByEmail } from "../../controllers/index.js";
 
 passport.serializeUser((user, done) => {
   done(null, user);
@@ -10,6 +10,10 @@ passport.serializeUser((user, done) => {
 passport.deserializeUser(async (username, done) => {
   const users = await getAllUsers();
   const user = users.find((user) => user.email === username.email);
+  if (!user) {
+    done(null, false);
+    return;
+  }
   done(null, user);
 });
 

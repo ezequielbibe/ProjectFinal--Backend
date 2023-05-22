@@ -3,10 +3,10 @@ import { logger } from "./logs/winston.js";
 import express from "express";
 import connectToMongoDB from "./config/connectToDbMongo.js";
 import mongoStore from "connect-mongo";
-import { authRouter } from "./router/index.js";
+import { usersRouter } from "./router/index.js";
 import expressSession from "express-session";
 import passport from "passport";
-import "./controllers/auth/passport/passport.js";
+import "./helpers/passport/passport.js";
 
 const app = express();
 
@@ -29,7 +29,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use("/auth", authRouter);
+app.use("/users", usersRouter);
 
 app.listen(PORT, async () => {
   try {

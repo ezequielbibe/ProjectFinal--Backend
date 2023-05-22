@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { PRIVATE_KEY } from "../../../config/environment.js";
+import { PRIVATE_KEY } from "../../config/environment.js";
 
 export const generateToken = (user) =>
   jwt.sign(JSON.stringify(user), PRIVATE_KEY);

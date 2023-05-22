@@ -38,7 +38,11 @@ class ContainerMongoDB {
     try {
       const query = {};
       query[key] = value;
-      const req = await this.model.findOneAndUpdate(query, { $set: data });
+      const req = await this.model.findOneAndUpdate(
+        query,
+        { $set: data },
+        { returnOriginal: false }
+      );
       return req;
     } catch (error) {
       logger.error(`error: ${error.message}`);
@@ -50,7 +54,6 @@ class ContainerMongoDB {
       const query = {};
       query[key] = value;
       const req = await this.model.findOneAndDelete(query);
-      logger.info("deleted");
       return req;
     } catch (error) {
       logger.error(`error: ${error.message}`);
