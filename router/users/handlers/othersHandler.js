@@ -32,9 +32,10 @@ export const usersControllerPut = async (req, res) => {
     const { email } = req.params;
     const { name, phone, address, age, avatar, password } = req.body;
     const oldUser = await getUserByEmail(email);
-    if (!oldUser || !email) {
+    if (!oldUser & (email === req.user.email)) {
       res.status(404);
       res.json({ errorMessage: `Recourse solicited is not found` });
+      return;
     }
     const newUser = {
       name,
@@ -43,9 +44,10 @@ export const usersControllerPut = async (req, res) => {
       age,
       avatar,
       email,
-      password: compareSync(password, oldUser.password)
-        ? oldUser.password
-        : hashSync(password, 10),
+      password:
+        password === oldUser.password || compareSync(password, oldUser.password)
+          ? password
+          : hashSync(password, 10),
     };
     const validate = validateUser(newUser);
     if (!validate.status) {
@@ -54,23 +56,26 @@ export const usersControllerPut = async (req, res) => {
       res.json({ errorMessage });
       return;
     }
-    const data = await updateUser({
-      ...newUser,
-      admin: oldUser.admin,
-    });
-    res.json({ message: "user was updated", data });
+    res.json(await updateUser(newUser));
   } catch (error) {
-    logger.error(`We has problems: ${error.message}`);
+    logger.error(`We has problems1: ${error.message}`);
   }
 };
 
 export const usersControllerDelete = async (req, res) => {
   try {
     const { email } = req.params;
+    const { admin } = req.user;
     const user = await getUserByEmail(email);
-    if (email && user) {
-      const data = await deleteUserByEmail(email);
-      res.json({ message: "user was deleted", data });
+    if (!admin && email !== req.user.email) {
+      res.status(403);
+      res.json({
+        errorMessage: `Recourse solicited is invalid. This route is for only admin`,
+      });
+      return;
+    }
+    if (user && (admin == true || email === req.user.email)) {
+      res.json(await deleteUserByEmail(email));
       return;
     }
     res.status(404);

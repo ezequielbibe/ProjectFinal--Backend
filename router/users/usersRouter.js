@@ -8,11 +8,12 @@ import {
   registerController,
   errorController,
 } from "./handlers/index.js";
+import { authMiddleware } from "../../helpers/index.js";
 
 const usersRouter = Router();
 usersRouter.get("/:email?", usersControllerGet);
-usersRouter.put("/:email?", usersControllerPut);
-usersRouter.delete("/:email?", usersControllerDelete);
+usersRouter.put("/:email", authMiddleware, usersControllerPut);
+usersRouter.delete("/:email", authMiddleware, usersControllerDelete);
 usersRouter.get(
   "/auth/login",
   passport.authenticate("login", {

@@ -20,6 +20,12 @@ passport.deserializeUser(async (username, done) => {
 passport.use(
   "login",
   new LocalStrategy(async (username, password, done) => {
+    if (typeof username !== "string" || typeof password !== "string") {
+      done(null, false, {
+        message: "Error Type: email and password must to be a string",
+      });
+      return;
+    }
     const user = await getUserByEmail(username);
     if (!user) {
       done(null, false, { message: "Invalid credentials" });
@@ -37,6 +43,12 @@ passport.use(
 passport.use(
   "register",
   new LocalStrategy(async (username, password, done) => {
+    if (typeof username !== "string" || typeof password !== "string") {
+      done(null, false, {
+        message: "Error Type: email and password must to be a string",
+      });
+      return;
+    }
     const userExist = await getUserByEmail(username);
     if (userExist) {
       done(null, false, { message: "user already exists" });

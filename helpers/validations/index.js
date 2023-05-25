@@ -1,0 +1,1 @@
+export { validateUser } from "./userValidate.js";
