@@ -5,7 +5,7 @@ import {
   deleteUserByEmail,
 } from "../../../controllers/index.js";
 import { hashSync, compareSync } from "bcrypt";
-import { objectValidate } from "../../../helpers/index.js";
+import { validateUser } from "../../../helpers/index.js";
 import { logger } from "../../../logs/winston.js";
 
 export const usersControllerGet = async (req, res) => {
@@ -47,7 +47,7 @@ export const usersControllerPut = async (req, res) => {
         ? oldUser.password
         : hashSync(password, 10),
     };
-    const validate = objectValidate(newUser);
+    const validate = validateUser(newUser);
     if (!validate.status) {
       const errorMessage = validate.errorMessage;
       res.status(403);

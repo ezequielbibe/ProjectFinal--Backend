@@ -4,8 +4,7 @@ import { logger } from "../logs/winston.js";
 export const createUser = async (data) => {
   try {
     const newData = { ...data, admin: false };
-    await daoUsers.createData(newData);
-    return newData;
+    return await daoUsers.createData(newData);
   } catch (error) {
     logger.error(`We has problems: ${error.message}`);
   }

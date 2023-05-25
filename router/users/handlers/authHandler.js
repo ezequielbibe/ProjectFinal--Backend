@@ -1,7 +1,7 @@
 import { logger } from "../../../logs/winston.js";
 import { createUser } from "../../../controllers/index.js";
 import { generateToken } from "../../../helpers/jwt/jsonwebtoken.js";
-import { objectValidate } from "../../../helpers/index.js";
+import { validateUser } from "../../../helpers/index.js";
 
 export const loginController = async (req, res) => {
   try {
@@ -18,7 +18,7 @@ export const registerController = async (req, res) => {
     const { name, phone, address, age, avatar } = req.body;
     const { email, password, admin } = req.session.passport.user;
     const user = { name, phone, address, age, avatar, email, password };
-    const validate = objectValidate(user);
+    const validate = validateUser(user);
     if (!validate.status) {
       const errorMessage = validate.errorMessage;
       res.status(403);

@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import { PRIVATE_KEY } from "../../config/environment.js";
 
 export const generateToken = (user) =>
-  jwt.sign(JSON.stringify(user), PRIVATE_KEY);
+  jwt.sign(user, PRIVATE_KEY, { expiresIn: 60 });
 
 export const verifyToken = (token) => jwt.verify(token, PRIVATE_KEY);
 

@@ -1,7 +1,8 @@
 import { logger } from "../logs/winston.js";
-import randomBytes from "randombytes";
+import randomBytes from "crypto";
 
 export const users = [];
+export const products = [];
 
 class ContainerMemory {
   constructor(model) {
@@ -10,7 +11,10 @@ class ContainerMemory {
 
   createData(data) {
     try {
-      const newData = { ...data, _id: randomBytes(16) };
+      const newData = {
+        ...data,
+        _id: randomBytes.randomBytes(16).toString("hex"),
+      };
       this.model.push(newData);
       return newData;
     } catch (error) {

@@ -9,15 +9,34 @@ export const phoneValidate = (number) => {
   return regexp.test(number);
 };
 
-export const objectValidate = (obj) => {
-  const error = [];
-  Object.keys(obj).forEach((key) => {
-    if (key === "phone") !phoneValidate(obj[key]) && error.push(key);
-    else !obj[key] && error.push(key);
+export const validateUser = ({
+  name,
+  email,
+  avatar,
+  address,
+  password,
+  phone,
+  age,
+}) => {
+  const user = { name, email, avatar, address, password, phone, age };
+  const errors = [];
+  Object.keys(user).forEach((key) => {
+    if (key === "age" && typeof user[key] !== "number") {
+      errors.push(key);
+      return;
+    }
+    if (typeof user[key] !== "string" && key !== "age") {
+      errors.push(key);
+      return;
+    }
+    if (key === "phone" && !phoneValidate(user[key])) {
+      errors.push(key);
+      return;
+    }
   });
-  if (error.length === 0) {
+  if (errors.length === 0) {
     return { status: true };
   }
-  const errorMessage = `Invalid properties: ${error.join(", ")}`;
+  const errorMessage = `Invalid properties: ${errors.join(", ")}`;
   return { status: false, errorMessage };
 };
