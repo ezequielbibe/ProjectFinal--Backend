@@ -4,4 +4,4 @@ export {
   authMiddleware,
 } from "./jwt/jsonwebtoken.js";
 
-export { validateUser } from "./validations/index.js";
+export { validateUser, validateProduct } from "./validations/index.js";
