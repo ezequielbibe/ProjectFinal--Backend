@@ -5,8 +5,8 @@ import { validateUser } from "../../../helpers/index.js";
 
 export const loginController = async (req, res) => {
   try {
-    const { name, email, admin } = req.user;
-    const token = generateToken({ name, email, admin });
+    const { name, id, admin } = req.user;
+    const token = generateToken({ name, id, admin });
     res.json({ token });
   } catch (error) {
     logger.error(`We has problems: ${error.message}`);
@@ -15,9 +15,9 @@ export const loginController = async (req, res) => {
 
 export const registerController = async (req, res) => {
   try {
-    const { name, phone, address, age, avatar } = req.body;
+    const { name, phone } = req.body;
     const { email, password, admin } = req.session.passport.user;
-    const user = { name, phone, address, age, avatar, email, password };
+    const user = { name, phone, email, password };
     const validate = validateUser(user);
     if (!validate.status) {
       const errorMessage = validate.errorMessage;

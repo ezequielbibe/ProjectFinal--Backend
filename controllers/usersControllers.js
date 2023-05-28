@@ -18,6 +18,14 @@ export const getAllUsers = async () => {
   }
 };
 
+export const getUserById = async (id) => {
+  try {
+    return await daoUsers.readOneData("_id", id);
+  } catch (error) {
+    logger.error(`We has problems: ${error.message}`);
+  }
+};
+
 export const getUserByEmail = async (email) => {
   try {
     return await daoUsers.readOneData("email", email);
@@ -34,9 +42,9 @@ export const updateUser = async (user) => {
   }
 };
 
-export const deleteUserByEmail = async (email) => {
+export const deleteUserById = async (id) => {
   try {
-    return await daoUsers.deleteData("email", email);
+    return await daoUsers.deleteData("_id", id);
   } catch (error) {
     logger.error(`We has problems: ${error.message}`);
   }

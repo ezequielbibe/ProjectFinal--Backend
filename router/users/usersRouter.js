@@ -11,9 +11,9 @@ import {
 import { authMiddleware } from "../../helpers/index.js";
 
 const usersRouter = Router();
-usersRouter.get("/:email?", usersControllerGet);
-usersRouter.put("/:email", authMiddleware, usersControllerPut);
-usersRouter.delete("/:email", authMiddleware, usersControllerDelete);
+usersRouter.get("/:id?", usersControllerGet);
+usersRouter.put("/:id", authMiddleware, usersControllerPut);
+usersRouter.delete("/:id", authMiddleware, usersControllerDelete);
 usersRouter.get(
   "/auth/login",
   passport.authenticate("login", {

@@ -16,6 +16,7 @@ export const authMiddleware = (req, res, next) => {
   if (!token) {
     res.status(401);
     res.json({ error: "No hay credenciales" });
+    return;
   }
 
   try {

@@ -2,9 +2,10 @@ export {
   createUser,
   getAllUsers,
   getUserByEmail,
+  getUserById,
   updateUser,
   clearUsers,
-  deleteUserByEmail,
+  deleteUserById,
 } from "./usersControllers.js";
 export {
   createProduct,

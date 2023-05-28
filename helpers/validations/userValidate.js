@@ -6,11 +6,7 @@ const phoneValidate = (number) => {
 export const validateUser = (user) => {
   const errors = [];
   Object.keys(user).forEach((key) => {
-    if (key === "age" && typeof user[key] !== "number") {
-      errors.push(key);
-      return;
-    }
-    if (typeof user[key] !== "string" && key !== "age") {
+    if (typeof user[key] !== "string") {
       errors.push(key);
       return;
     }

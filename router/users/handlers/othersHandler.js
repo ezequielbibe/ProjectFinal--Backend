@@ -1,8 +1,8 @@
 import {
   getAllUsers,
-  getUserByEmail,
+  getUserById,
   updateUser,
-  deleteUserByEmail,
+  deleteUserById,
 } from "../../../controllers/index.js";
 import { hashSync, compareSync } from "bcrypt";
 import { validateUser } from "../../../helpers/index.js";
@@ -10,9 +10,9 @@ import { logger } from "../../../logs/winston.js";
 
 export const usersControllerGet = async (req, res) => {
   try {
-    const { email } = req.params;
-    const user = await getUserByEmail(email);
-    if (email)
+    const { id } = req.params;
+    const user = await getUserById(id);
+    if (id)
       if (!user) {
         res.status(404);
         res.json({ errorMessage: "Recourse solicited is not found" });
@@ -29,10 +29,10 @@ export const usersControllerGet = async (req, res) => {
 
 export const usersControllerPut = async (req, res) => {
   try {
-    const { email } = req.params;
-    const { name, phone, address, age, avatar, password } = req.body;
-    const oldUser = await getUserByEmail(email);
-    if (!oldUser & (email === req.user.email)) {
+    const { id } = req.params;
+    const { name, phone, password } = req.body;
+    const oldUser = await getUserById(id);
+    if (!oldUser && id !== req.user.id) {
       res.status(404);
       res.json({ errorMessage: `Recourse solicited is not found` });
       return;
@@ -40,10 +40,7 @@ export const usersControllerPut = async (req, res) => {
     const newUser = {
       name,
       phone,
-      address,
-      age,
-      avatar,
-      email,
+      email: oldUser.email,
       password:
         password === oldUser.password || compareSync(password, oldUser.password)
           ? password
@@ -64,18 +61,18 @@ export const usersControllerPut = async (req, res) => {
 
 export const usersControllerDelete = async (req, res) => {
   try {
-    const { email } = req.params;
+    const { id } = req.params;
     const { admin } = req.user;
-    const user = await getUserByEmail(email);
-    if (!admin && email !== req.user.email) {
+    const user = await getUserById(id);
+    if (!admin && id !== req.user.id) {
       res.status(403);
       res.json({
         errorMessage: `Recourse solicited is invalid. This route is for only admin`,
       });
       return;
     }
-    if (user && (admin == true || email === req.user.email)) {
-      res.json(await deleteUserByEmail(email));
+    if (user && (admin == true || id === req.user.id)) {
+      res.json(await deleteUserById(id));
       return;
     }
     res.status(404);
