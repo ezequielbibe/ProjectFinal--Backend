@@ -8,9 +8,11 @@ import {
   productsRouter,
   cartsRouter,
   ordersRouter,
+  configRouter,
 } from "./router/index.js";
 import expressSession from "express-session";
 import passport from "passport";
+import { engine } from "express-handlebars";
 import "./helpers/passport/passport.js";
 
 const app = express();
@@ -33,11 +35,15 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
+app.engine("handlebars", engine());
+app.set("view engine", "handlebars");
+app.set("views", "./views");
 
 app.use("/users", usersRouter);
 app.use("/products", productsRouter);
 app.use("/carts", cartsRouter);
 app.use("/orders", ordersRouter);
+app.use("/config", configRouter);
 
 app.listen(PORT, async () => {
   try {
