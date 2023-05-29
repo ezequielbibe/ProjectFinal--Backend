@@ -20,15 +20,29 @@ export const validateProduct = (prod) => {
       errors.push(key);
       return;
     }
-    if ((key === "code" || key === "price" || key === "stock") && typeof prod[key] !== "number") {
+    if (
+      (key === "code" || key === "price" || key === "stock") &&
+      typeof prod[key] !== "number"
+    ) {
       errors.push(key);
       return;
     }
-    if(key === 'category' && (prod[key] !== 'phone cases' && prod[key] !== 'phones' && prod[key] !== 'headphones' && prod[key] !== 'others')) {
-      errors.push(key)
-      return
+    if (
+      key === "category" &&
+      prod[key] !== "phone cases" &&
+      prod[key] !== "phones" &&
+      prod[key] !== "headphones" &&
+      prod[key] !== "others"
+    ) {
+      errors.push(key);
+      return;
     }
-    if (typeof prod[key] !== "string" && key !== "code" && key !== "price" && key !== "stock") {
+    if (
+      typeof prod[key] !== "string" &&
+      key !== "code" &&
+      key !== "price" &&
+      key !== "stock"
+    ) {
       errors.push(key);
       return;
     }
