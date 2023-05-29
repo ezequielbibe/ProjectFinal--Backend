@@ -1,6 +1,9 @@
 import { Router } from "express";
 import {
   PORT,
+  MONGO_LOCAL,
+  MONGO_ATLAS,
+  SESSION_TIME,
   PERSISTENCE,
   nodeVersion,
   memoryUsage,
@@ -14,6 +17,9 @@ configRouter.get("/", (_, res) => {
   res.render("config", {
     PORT,
     PERSISTENCE,
+    MONGO_LOCAL,
+    MONGO_ATLAS,
+    SESSION_TIME,
     nodeVersion,
     memoryUsage,
     execPath,

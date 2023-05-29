@@ -1,4 +1,9 @@
-import { PORT, MONGO_LOCAL, PRIVATE_KEY } from "./config/environment.js";
+import {
+  PORT,
+  MONGO_LOCAL,
+  PRIVATE_KEY,
+  SESSION_TIME,
+} from "./config/environment.js";
 import { logger } from "./logs/winston.js";
 import express from "express";
 import connectToMongoDB from "./config/connectToDbMongo.js";
@@ -24,7 +29,7 @@ app.use(
   expressSession({
     store: mongoStore.create({
       mongoUrl: MONGO_LOCAL,
-      ttl: 6000,
+      ttl: SESSION_TIME,
       autoRemove: "interval",
       autoRemoveInterval: 0,
     }),
