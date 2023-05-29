@@ -17,7 +17,5 @@ export const handleSendMail = async (text, subject, to) => {
     subject,
     text,
   });
-
-  console.log(`Done ${JSON.stringify(info, null, 2)}`);
   return info;
 };

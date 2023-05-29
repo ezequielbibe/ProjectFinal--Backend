@@ -1,7 +1,8 @@
 import { logger } from "../../../logs/winston.js";
 import { createUser } from "../../../controllers/index.js";
 import { generateToken } from "../../../helpers/jwt/jsonwebtoken.js";
-import { validateUser } from "../../../helpers/index.js";
+import { handleSendMail, validateUser } from "../../../helpers/index.js";
+import { ADMIN_EMAIL } from "../../../config/environment.js";
 
 export const loginController = async (req, res) => {
   try {
@@ -27,6 +28,9 @@ export const registerController = async (req, res) => {
     }
     const data = await createUser({ ...user, admin });
     res.json(data);
+    const subject = "New user register!";
+    const text = JSON.stringify(data, null, 2);
+    await handleSendMail(text, subject, ADMIN_EMAIL);
   } catch (error) {
     logger.error(`We has problems: ${error.message}`);
   }
