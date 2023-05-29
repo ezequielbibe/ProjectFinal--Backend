@@ -5,8 +5,8 @@ import { validateUser } from "../../../helpers/index.js";
 
 export const loginController = async (req, res) => {
   try {
-    const { name, id, admin } = req.user;
-    const token = generateToken({ name, id, admin });
+    const { name, _id, admin } = req.user;
+    const token = generateToken({ name, _id, admin });
     res.json({ token });
   } catch (error) {
     logger.error(`We has problems: ${error.message}`);

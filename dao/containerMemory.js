@@ -3,6 +3,7 @@ import randomBytes from "crypto";
 
 export const users = [];
 export const products = [];
+export const carts = [];
 
 class ContainerMemory {
   constructor(model) {

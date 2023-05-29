@@ -15,3 +15,11 @@ export {
   deleteProductById,
   clearProducts,
 } from "./productsControllers.js";
+export {
+  createCart,
+  getCartById,
+  addProductCartById,
+  clearCart,
+  removeProductCart,
+  clearAllCarts,
+} from "./cartsControllers.js";

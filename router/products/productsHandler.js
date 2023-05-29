@@ -60,10 +60,12 @@ export const productControllerPut = async (req, res) => {
     if (!admin) {
       res.status(403);
       res.json({ error: `route invalid. This route is for only admin` });
+      return;
     }
     if (!oldProduct) {
       res.status(404);
       res.json({ errorMessage: `Recourse solicited is not found` });
+      return;
     }
     const product = req.body;
     const validate = validateProduct(product);
@@ -93,10 +95,12 @@ export const productControllerDelete = async (req, res) => {
     if (!admin) {
       res.status(403);
       res.json({ error: `route invalid. This route is for only admin` });
+      return;
     }
     if (!prod) {
       res.status(404);
       res.json({ errorMessage: `Recourse solicited is not found` });
+      return;
     }
     res.json(await deleteProductById(id));
   } catch (error) {

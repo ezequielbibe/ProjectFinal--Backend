@@ -25,10 +25,12 @@ class ContainerMongoDB {
 
   async readOneData(key, value) {
     try {
+      if ((key === "id" || key === "_id") && value.length > 24) {
+        return undefined;
+      }
       const query = {};
       query[key] = value;
-      const req = await this.model.findOne(query).lean();
-      return req;
+      return await this.model.findOne(query).lean();
     } catch (error) {
       logger.error(`error: ${error.message}`);
     }
@@ -36,6 +38,9 @@ class ContainerMongoDB {
 
   async updateData(key, value, data) {
     try {
+      if ((key === "id" || key === "_id") && value.length > 24) {
+        return undefined;
+      }
       const query = {};
       query[key] = value;
       const req = await this.model.findOneAndUpdate(
@@ -51,6 +56,9 @@ class ContainerMongoDB {
 
   async deleteData(key, value) {
     try {
+      if ((key === "id" || key === "_id") && value.length > 24) {
+        return undefined;
+      }
       const query = {};
       query[key] = value;
       const req = await this.model.findOneAndDelete(query);

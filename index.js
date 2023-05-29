@@ -3,7 +3,7 @@ import { logger } from "./logs/winston.js";
 import express from "express";
 import connectToMongoDB from "./config/connectToDbMongo.js";
 import mongoStore from "connect-mongo";
-import { usersRouter, productsRouter } from "./router/index.js";
+import { usersRouter, productsRouter, cartsRouter } from "./router/index.js";
 import expressSession from "express-session";
 import passport from "passport";
 import "./helpers/passport/passport.js";
@@ -31,6 +31,7 @@ app.use(passport.session());
 
 app.use("/users", usersRouter);
 app.use("/products", productsRouter);
+app.use("/carts", cartsRouter);
 
 app.listen(PORT, async () => {
   try {
