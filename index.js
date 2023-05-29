@@ -3,7 +3,12 @@ import { logger } from "./logs/winston.js";
 import express from "express";
 import connectToMongoDB from "./config/connectToDbMongo.js";
 import mongoStore from "connect-mongo";
-import { usersRouter, productsRouter, cartsRouter } from "./router/index.js";
+import {
+  usersRouter,
+  productsRouter,
+  cartsRouter,
+  ordersRouter,
+} from "./router/index.js";
 import expressSession from "express-session";
 import passport from "passport";
 import "./helpers/passport/passport.js";
@@ -17,7 +22,7 @@ app.use(
   expressSession({
     store: mongoStore.create({
       mongoUrl: MONGO_LOCAL,
-      ttl: 600,
+      ttl: 6000,
       autoRemove: "interval",
       autoRemoveInterval: 0,
     }),
@@ -32,6 +37,7 @@ app.use(passport.session());
 app.use("/users", usersRouter);
 app.use("/products", productsRouter);
 app.use("/carts", cartsRouter);
+app.use("/orders", ordersRouter);
 
 app.listen(PORT, async () => {
   try {

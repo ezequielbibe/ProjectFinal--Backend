@@ -55,19 +55,17 @@ export const cartControllerGet = async (req, res) => {
 export const cartControllerPostProduct = async (req, res) => {
   try {
     const { id, _id } = req.params;
-    const user =
-      (await getUserById(_id)(user)) &&
-      !(await getCartById(_id)) &&
-      (await createCart({
+    const user = await getUserById(_id);
+    if (user && !(await getCartById(_id))) {
+      await createCart({
         id: _id,
         email: user.email,
         timeStamp: new Date().toLocaleString(),
         products: [],
-      }));
-
+      });
+    }
     const cart = await getCartById(_id);
     const product = await getProductById(id);
-
     if (!cart) {
       res.status(404);
       res.json({ errorMessage: `Cart solicited is not found` });
@@ -109,12 +107,15 @@ export const cartControllerDeleteProduct = async (req, res) => {
       res.json({ errorMessage: `Cart solicited is not found` });
       return;
     }
-    if (!product) {
+    if (
+      !product ||
+      !cart["products"].some((key) => key._id.toString() === id)
+    ) {
       res.status(404);
       res.json({ errorMessage: `Product solicited is not found` });
       return;
     }
-    res.json(await removeProductCart(_id, id));
+    res.json(await removeProductCart(cart, id));
   } catch (error) {
     logger.error(`error: ${error.message}`);
   }

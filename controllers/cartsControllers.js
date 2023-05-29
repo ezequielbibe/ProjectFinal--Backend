@@ -20,7 +20,15 @@ export const getCartById = async (id) => {
 export const addProductCartById = async (id, product) => {
   try {
     const cart = await daoCart.readOneData("id", id);
-    cart["products"].push(product);
+    const products = cart.products;
+    if (products.some((key) => key._id.toString() === product._id.toString())) {
+      const idx = products.findIndex(
+        (element) => element._id.toString() === product._id.toString()
+      );
+      products[idx].amount += 1;
+      return await daoCart.updateData("id", id, { ...cart, products });
+    }
+    cart["products"].push({ ...product, amount: 1 });
     return await daoCart.updateData("id", id, cart);
   } catch (error) {
     logger.error(`error: ${error.message}`);
@@ -35,16 +43,20 @@ export const clearCart = async (id) => {
   }
 };
 
-export const removeProductCart = async (_id, id) => {
+export const removeProductCart = async (cart, id) => {
   try {
-    const cart = await daoCart.readOneData("id", _id);
-    const newProducts = cart["products"].filter((prod) => {
-      prod._id !== id;
-    });
-    return await daoCart.updateData("id", _id, {
-      ...cart,
-      products: newProducts,
-    });
+    const products = cart.products;
+    const idx = products.findIndex((element) => element._id.toString() === id);
+    if (products[idx].amount !== 1) {
+      products[idx].amount -= 1;
+      return await daoCart.updateData("id", cart.id, { ...cart, products });
+    } else {
+      const newProducts = products.filter((prod) => prod._id.toString() !== id);
+      return await daoCart.updateData("id", cart.id, {
+        ...cart,
+        products: newProducts,
+      });
+    }
   } catch (error) {
     logger.error(`error: ${error.message}`);
   }

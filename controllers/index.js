@@ -24,3 +24,11 @@ export {
   removeProductCart,
   clearAllCarts,
 } from "./cartsControllers.js";
+export {
+  createOrder,
+  getAllOrders,
+  getOneOrder,
+  getOrdersForUserEmail,
+  getOrdersForStatus,
+  updateOrderStatus,
+} from "./ordersController.js";

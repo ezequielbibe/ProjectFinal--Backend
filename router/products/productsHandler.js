@@ -32,7 +32,7 @@ export const productControllerGetFor = async (req, res) => {
   try {
     const { category } = req.params;
     if (
-      category === "phone cases" ||
+      category === "phoneCases" ||
       category === "phones" ||
       category === "headphones" ||
       category === "others"

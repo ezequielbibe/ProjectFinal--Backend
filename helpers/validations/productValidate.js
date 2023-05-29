@@ -29,7 +29,7 @@ export const validateProduct = (prod) => {
     }
     if (
       key === "category" &&
-      prod[key] !== "phone cases" &&
+      prod[key] !== "phoneCases" &&
       prod[key] !== "phones" &&
       prod[key] !== "headphones" &&
       prod[key] !== "others"
