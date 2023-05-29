@@ -2,6 +2,7 @@ import {
   createProduct,
   getAllProducts,
   getProductById,
+  getProductsByCategory,
   deleteProductById,
   updateProduct,
 } from "../../controllers/index.js";
@@ -27,6 +28,25 @@ export const productControllerGet = async (req, res) => {
   }
 };
 
+export const productControllerGetFor = async (req, res) => {
+  try {
+    const { category } = req.params;
+    if (
+      category === "phone cases" ||
+      category === "phones" ||
+      category === "headphones" ||
+      category === "others"
+    ) {
+      res.json(await getProductsByCategory(category));
+      return;
+    }
+    res.status(404);
+    res.json({ errorMessage: `Category solicited is invalid.` });
+  } catch (error) {
+    logger.error(`We has problems: ${error.message}`);
+  }
+};
+
 export const productControllerPost = async (req, res) => {
   try {
     const { admin } = req.user;
@@ -39,7 +59,6 @@ export const productControllerPost = async (req, res) => {
       return;
     }
     const validate = validateProduct(product);
-    console.log(validate.status);
     if (!validate.status) {
       res.status(403);
       res.json({ errorMessage: validate.errorMessage });

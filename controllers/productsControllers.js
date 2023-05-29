@@ -3,8 +3,7 @@ import { logger } from "../logs/winston.js";
 
 export const createProduct = async (data) => {
   try {
-    const req = await daoProducts.createData(data);
-    return req;
+    return await daoProducts.createData(data);
   } catch (error) {
     logger.error(`error: ${error.message}`);
   }
@@ -12,8 +11,15 @@ export const createProduct = async (data) => {
 
 export const getProductById = async (id) => {
   try {
-    const req = await daoProducts.readOneData("_id", id);
-    return req;
+    return await daoProducts.readOneData("_id", id);
+  } catch (error) {
+    logger.error(`error: ${error.message}`);
+  }
+};
+
+export const getProductsByCategory = async (category) => {
+  try {
+    return await daoProducts.readDataFor("category", category);
   } catch (error) {
     logger.error(`error: ${error.message}`);
   }
@@ -21,8 +27,7 @@ export const getProductById = async (id) => {
 
 export const getAllProducts = async () => {
   try {
-    const req = await daoProducts.readAllData();
-    return req;
+    return await daoProducts.readAllData();
   } catch (error) {
     logger.error(`error: ${error.message}`);
   }
@@ -30,8 +35,7 @@ export const getAllProducts = async () => {
 
 export const updateProduct = async (_id, product) => {
   try {
-    const req = await daoProducts.updateData("_id", _id, product);
-    return req;
+    return await daoProducts.updateData("_id", _id, product);
   } catch (error) {
     logger.error(`error: ${error.message}`);
   }
@@ -39,13 +43,12 @@ export const updateProduct = async (_id, product) => {
 
 export const deleteProductById = async (_id) => {
   try {
-    const req = await daoProducts.deleteData("_id", _id);
-    return req;
+    return await daoProducts.deleteData("_id", _id);
   } catch (error) {
     logger.error(`error: ${error.message}`);
   }
 };
 
 export const clearProducts = () => {
-  daoProducts.clearData();
+  return daoProducts.clearData();
 };

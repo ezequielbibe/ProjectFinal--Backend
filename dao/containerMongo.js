@@ -25,7 +25,7 @@ class ContainerMongoDB {
 
   async readOneData(key, value) {
     try {
-      if ((key === "id" || key === "_id") && value.length > 24) {
+      if ((key === "id" || key === "_id") && value.length !== 24) {
         return undefined;
       }
       const query = {};
@@ -36,9 +36,22 @@ class ContainerMongoDB {
     }
   }
 
+  async readDataFor(key, value) {
+    try {
+      if ((key === "id" || key === "_id") && value.length !== 24) {
+        return undefined;
+      }
+      const query = {};
+      query[key] = value;
+      return await this.model.find(query).lean();
+    } catch (error) {
+      logger.error(`error: ${error.message}`);
+    }
+  }
+
   async updateData(key, value, data) {
     try {
-      if ((key === "id" || key === "_id") && value.length > 24) {
+      if ((key === "id" || key === "_id") && value.length !== 24) {
         return undefined;
       }
       const query = {};

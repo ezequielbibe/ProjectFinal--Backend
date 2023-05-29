@@ -25,8 +25,7 @@ class ContainerMemory {
 
   readAllData() {
     try {
-      const req = this.model;
-      return req;
+      return this.model;
     } catch (error) {
       logger.error(`error: ${error.message}`);
     }
@@ -34,8 +33,15 @@ class ContainerMemory {
 
   readOneData(key, value) {
     try {
-      const req = this.model.find((data) => data[key] === value);
-      return req;
+      return this.model.find((data) => data[key] === value);
+    } catch (error) {
+      logger.error(`error: ${error.message}`);
+    }
+  }
+
+  readDataFor(key, value) {
+    try {
+      return this.model.filter((data) => data[key] === value);
     } catch (error) {
       logger.error(`error: ${error.message}`);
     }

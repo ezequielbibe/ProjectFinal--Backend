@@ -27,6 +27,7 @@ export const newCartControllerGet = async (req, res) => {
     res.json(
       await createCart({
         id,
+        email: user.email,
         timeStamp: new Date().toLocaleString(),
         products: [],
       })
@@ -54,10 +55,12 @@ export const cartControllerGet = async (req, res) => {
 export const cartControllerPostProduct = async (req, res) => {
   try {
     const { id, _id } = req.params;
-    (await getUserById(_id)) &&
+    const user =
+      (await getUserById(_id)(user)) &&
       !(await getCartById(_id)) &&
       (await createCart({
         id: _id,
+        email: user.email,
         timeStamp: new Date().toLocaleString(),
         products: [],
       }));
