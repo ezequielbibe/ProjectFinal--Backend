@@ -1,0 +1,13 @@
+<h1>Soy chat</h1>
+
+<form id="addMessageForm">
+    <div>
+        <label for="text" class="form-label">Message</label>
+        <input type="text" class="form-control text-dark" name="text" id="text" aria-describedby="text" placeholder="mensaje...">
+    </div>
+    <button type='button' class="btn btn-success" onclick="addMessage(event, addMessageForm, '{{email}}')">Submit</button>
+</form>
+
+<ul id="chat">
+
+</ul>

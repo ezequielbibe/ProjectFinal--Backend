@@ -12,6 +12,7 @@ import { logger } from "../../logs/winston.js";
 export const productControllerGet = async (req, res) => {
   try {
     const { id } = req.params;
+    console.log(req.user);
     const prod = await getProductById(id);
     if (id)
       if (!prod) {

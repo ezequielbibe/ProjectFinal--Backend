@@ -5,6 +5,7 @@ export const users = [];
 export const products = [];
 export const carts = [];
 export const orders = [];
+export const chats = [];
 
 class ContainerMemory {
   constructor(model) {

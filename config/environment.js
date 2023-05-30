@@ -3,6 +3,7 @@ dotenv.config();
 
 export const PORT = process.env.PORT;
 export const PERSISTENCE = process.env.PERSISTENCE;
+export const NODE_ENV = process.env.NODE_ENV;
 export const SESSION_TIME = process.env.SESSION_TIME;
 export const MONGO_ATLAS = process.env.MONGO_ATLAS;
 export const MONGO_LOCAL = process.env.MONGO_LOCAL;

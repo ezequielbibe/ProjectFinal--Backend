@@ -6,8 +6,9 @@ import ContainerMemory, {
   users,
   products,
   carts,
+  chats,
 } from "./containerMemory.js";
-import { Users, Products, Carts, Orders } from "../schemas/index.js";
+import { Users, Products, Carts, Orders, Chats } from "../schemas/index.js";
 
 const dao = PERSISTENCE === "MONGO" ? ContainerMongoDB : ContainerMemory;
 
@@ -17,6 +18,7 @@ export const daoProducts = new dao(
 );
 export const daoCart = new dao(PERSISTENCE === "MONGO" ? Carts : carts);
 export const daoOrder = new dao(PERSISTENCE === "MONGO" ? Orders : orders);
+export const daoChat = new dao(PERSISTENCE === "MONGO" ? Chats : chats);
 
 PERSISTENCE === "MONGO"
   ? logger.info("API initializated with DAO on MongoDB")

@@ -9,6 +9,7 @@ import {
   updateOrderStatus,
   getUserByEmail,
   clearCart,
+  createChat,
 } from "../../controllers/index.js";
 import { validateOrder, handleSendMail } from "../../helpers/index.js";
 
@@ -52,6 +53,7 @@ export const ordersControllerPost = async (req, res) => {
     const subject = `New order for: ${user.name} // ${user.email}`;
     const text = JSON.stringify(newOrder, null, 2);
     await handleSendMail(text, subject, ADMIN_EMAIL);
+    await createChat({ email: user.email, messages: [] });
   } catch (error) {
     logger.error(`error: ${error.message}`);
   }

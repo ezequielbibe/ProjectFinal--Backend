@@ -32,3 +32,9 @@ export {
   getOrdersForStatus,
   updateOrderStatus,
 } from "./ordersController.js";
+export {
+  createChat,
+  getAllChats,
+  getOneChat,
+  getChatForEmail,
+} from "./chatsController.js";
